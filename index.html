@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vulnerability Scanner</title>
+    <!-- Include Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            scroll-behavior: smooth;
+        }
+
+        /* Full-Page Hero Section */
+        .hero {
+            background: linear-gradient(45deg, #ff6700, #ff006e);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-top: 20px;
+            max-width: 600px;
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        .cta-btn {
+            margin-top: 30px;
+            padding: 15px 30px;
+            background-color: #fff;
+            color: #ff6700;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .cta-btn:hover {
+            background-color: #ff006e;
+            color: #fff;
+            transform: translateY(-5px);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .main-content h2 {
+            font-size: 2.5rem;
+            color: #ff6700;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .main-content p {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* Services Section */
+        .services {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .service-box {
+            width: 300px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+            position: relative;
+        }
+
+        .service-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .service-icon {
+            font-size: 2.5rem;
+            color: #ff6700;
+            margin-bottom: 15px;
+        }
+
+        .service-box h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .service-box p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .service-box a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #ff6700;
+            color: #fff;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .service-box a:hover {
+            background-color: #ff006e;
+            transform: translateY(-5px);
+        }
+
+     
+        /* Learn More Section */
+        .learn-more {
+            padding: 60px 20px;
+            background-color: #f9f9f9;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .learn-more h2 {
+            font-size: 2.5rem;
+            color: #ff6700;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .learn-more p {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            line-height: 1.8;
+        }
+
+        .learning {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .learning-box {
+            width: 300px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .learning-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .service-icon {
+            font-size: 2.5rem;
+            color: #ff6700;
+            margin-bottom: 15px;
+        }
+
+        .learn-more-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #ff6700;
+            color: #fff;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .learn-more-btn:hover {
+            background-color: #ff006e;
+            transform: translateY(-5px);
+        }
+
+
+
+
+
+
+
+
+
+
+        /* Footer Section */
+      /* Footer */
+.footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    margin-top: 60px;
+}
+
+.footer-links {
+    margin: 10px 0;
+}
+
+.footer-links a {
+    color: #fff;
+    margin: 0 15px;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.footer-links a:hover {
+    color: #ff6700;
+}
+
+.socials a {
+    color: #fff;
+    margin: 0 10px;
+    font-size: 1.5rem;
+    transition: color 0.3s ease;
+}
+
+.socials a:hover {
+    color: #ff6700;
+}
+
+    </style>
+</head>
+
+<body>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Vulnerability Scanner</h1>
+        <p>Scan your website for vulnerabilities like SQL Injection, XSS, malware, and open ports. Secure your website now.</p>
+        <button class="cta-btn">Get Started</button>
+    </section>
+
+    <!-- Main Content Section -->
+    <section class="main-content">
+        <h2>Our Services</h2>
+        <p>We provide a range of services to help you identify vulnerabilities in your website. From SQL injection to malware scanning, we've got you covered.</p>
+        <div class="services">
+            <div class="service-box">
+                <i class="fas fa-database service-icon"></i>
+                <h3>SQL Injection</h3>
+                <p>Detect SQL injection vulnerabilities on your site.</p>
+                <a href="#">Scan Now</a>
+            </div>
+            <div class="service-box">
+                <i class="fas fa-bug service-icon"></i>
+                <h3>XSS Vulnerability</h3>
+                <p>Find Cross-Site Scripting (XSS) vulnerabilities easily.</p>
+                <a href="#">Scan Now</a>
+            </div>
+            <div class="service-box">
+                <i class="fas fa-shield-alt service-icon"></i>
+                <h3>Malware Scan</h3>
+                <p>Detect malware and protect your site.</p>
+                <a href="#">Scan Now</a>
+            </div>
+            <div class="service-box">
+                <i class="fas fa-network-wired service-icon"></i>
+                <h3>Open Ports</h3>
+                <p>Check for open ports that could be exploited.</p>
+                <a href="#">Scan Now</a>
+            </div>
+        </div>
+    </section>
+
+
+       <!-- Learn More Section -->
+       <section class="learn-more">
+        <h2>Learn About Ethical Hacking</h2>
+        <p>We provide comprehensive resources to help you get started with ethical hacking.</p>
+        <div class="learning">
+            <div class="learning-box">
+                <i class="fas fa-video service-icon"></i>
+                <h3>Video Channels</h3>
+                <p>Explore video tutorials from top ethical hackers and experts in cybersecurity.</p>
+                <a href="#" class="learn-more-btn">Learn More</a>
+            </div>
+
+            <div class="learning-box">
+                <i class="fas fa-link service-icon"></i>
+                <h3>Important Links</h3>
+                <p>Access curated links to blogs, forums, and hacking communities.</p>
+                <a href="#" class="learn-more-btn">Learn More</a>
+            </div>
+
+            <div class="learning-box">
+                <i class="fas fa-book service-icon"></i>
+                <h3>Notes & Guides</h3>
+                <p>Download detailed notes, guides, and cheat sheets for ethical hacking.</p>
+                <a href="#" class="learn-more-btn">Learn More</a>
+            </div>
+        </div>
+    
+
+
+    <!-- Footer -->
+<footer class="footer">
+    <p>&copy; 2024 Vulnerability Scanner. All rights reserved.</p>
+    
+    <div class="footer-links">
+        <a href="#">About Us</a> | 
+        <a href="#">Contact</a>
+    </div>
+    
+    <div class="socials">
+        <a href="#"><i class="fab fa-facebook"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-linkedin"></i></a>
+    </div>
+</footer>
+
+
+</body>
+
+</html>
