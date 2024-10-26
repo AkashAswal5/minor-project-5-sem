@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vulnerability Scanner</title>
+    <link rel="stylesheet" href="http://127.0.0.1:5000/static/styles.css ">          <!--Flask Style url    
+                                                                                          change it 
+    
+    -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+ 
+</head>
+
+<body>
+
+    <section class="hero">
+        <h1>Vulnerability Scanner</h1>
+        <p>Scan your website for vulnerabilities like SQL Injection, XSS, malware, and open ports. Secure your website now.</p>
+        <button class="cta-btn">Get Started</button>
+    </section>
+
+    <div class="main-content">
+        <h2>Our Services</h2>
+        <p>We provide a range of services to help you identify vulnerabilities in your website. From SQL injection to malware scanning, we've got you covered.</p>
+        <div class="services">
+            <div class="service-box">
+                <i class="fas fa-database service-icon"></i>
+                <h3>SQL Injection</h3>
+                <p>Detect SQL injection vulnerabilities on your site.</p>
+                <a href="#" onclick="performScan('sql')">Scan Now</a>
+            </div>
+            <div class="service-box">
+                <i class="fas fa-bug service-icon"></i>
+                <h3>XSS Vulnerability</h3>
+                <p>Find Cross-Site Scripting (XSS) vulnerabilities easily.</p>
+                <a href="#" onclick="performScan('xss')">Scan Now</a>
+            </div>
+            <div class="service-box">
+                <i class="fas fa-shield-alt service-icon"></i>
+                <h3>Malware Scan</h3>
+                <p>Detect malware and protect your site.</p>
+                <a href="#" onclick="performScan('malware')">Scan Now</a>
+            </div>
+            <div class="service-box">
+                <i class="fas fa-network-wired service-icon"></i>
+                <h3>Open Ports</h3>
+                <p>Check for open ports that could be exploited.</p>
+                <a href="#" onclick="performScan('port')">Scan Now</a>
+            </div>
+        </div>
+
+        <section class="form-container">
+            <h2>Scan Your Website</h2>
+            <form id="scanForm">
+                <div class="form-group">
+                    <input type="url" id="url" name="url" placeholder="Enter your website URL" required>
+                </div>
+                <div class="form-group">
+                    <button type="button" onclick="performScan('sql')">Scan for SQL Injection</button>
+                    <button type="button" onclick="performScan('xss')">Scan for XSS Vulnerability</button>
+                    <button type="button" onclick="performScan('command')">Scan for Command Injection</button>
+                    <button type="button" onclick="performScan('port')">Scan for Open Ports</button>
+                    <button type="button" onclick="scanSecurityHeaders()">Scan for Security Headers</button>
+                </div>
+            </form>
+            <div id="scan-results" class="result"></div>
+            <div id="port-scan-results" class="result"></div>
+            <div id="header-scan-results" class="result"></div>
+        </section>
+    </div>
+
+
+    
+       <!-- Learn More Section -->
+       <section class="learn-more">
+        <h2>Learn About Ethical Hacking</h2>
+        <p>We provide comprehensive resources to help you get started with ethical hacking.</p>
+        <div class="learning">
+            <div class="learning-box">
+                <i class="fas fa-video service-icon"></i>
+                <h3>Video Channels</h3>
+                <p>Explore video tutorials from top ethical hackers and experts in cybersecurity.</p>
+                <a href="learning_box\youtube_links.html" class="learn-more-btn">Learn More</a>
+            </div>
+
+            <div class="learning-box">
+                <i class="fas fa-link service-icon"></i>
+                <h3>Important Links</h3>
+                <p>Access curated links to blogs, forums, and hacking communities.</p>
+                <a href="learning_box\important_links.html" class="learn-more-btn">Learn More</a>
+            </div>
+
+            <div class="learning-box">
+                <i class="fas fa-book service-icon"></i>
+                <h3>Notes & Guides</h3>
+                <p>Download detailed notes, guides, and cheat sheets for ethical hacking.</p>
+                <a href="learning_box\notes.html" class="learn-more-btn">Learn More</a>
+            </div>
+        </div>
+    
+
+
+    <footer>
+        
+        <p>Thank you for visiting out website </p>
+        
+        
+    </footer> 
+    <script src="http://127.0.0.1:5000/static/script.js"></script> <!-- flask script url change it when come to production-->
+</body>
+
+</html>
