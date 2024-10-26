@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scanner</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            margin: 0;
+        }
+        h2 {
+            color: #444;
+            margin-top: 20px;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            padding: 20px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+        }
+        input {
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #port-scan-results, #header-scan-results {
+            background-color: #fff;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            overflow-x: auto;
+        }
+        #port-scan-results, #header-scan-results {
+            margin-top: 10px;
+        }
+        .results-header {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to the Scanner</h1>
+
+    <div class="container">
+        <!-- Port Scanner Form -->
+        <h2>Port Scanner</h2>
+        <form id="port-scan-form">
+            <input type="text" name="target" placeholder="Target IP or Domain" required>
+            <input type="number" name="start_port" placeholder="Start Port" min="1" max="65535" required>
+            <input type="number" name="end_port" placeholder="End Port" min="1" max="65535" required>
+            <button type="submit">Scan Ports</button>
+        </form>
+        <div class="results-header">Port Scan Results</div>
+        <div id="port-scan-results">Port scan results will appear here...</div>
+
+        <!-- Security Headers Scanner Form -->
+        <h2>Security Headers Scanner</h2>
+        <form id="header-scan-form">
+            <input type="text" name="url" placeholder="URL to scan" required>
+            <button type="submit">Scan Headers</button>
+        </form>
+        <div class="results-header">Header Scan Results</div>
+        <div id="header-scan-results">Security header scan results will appear here...</div>
+    </div>
+
+    <script>
+        // Port scanner submission
+        document.getElementById('port-scan-form').onsubmit = async function (e) {
+            e.preventDefault();
+            let formData = new FormData(this);
+            let response = await fetch('/port_scan', {
+                method: 'POST',
+                body: formData,
+            });
+            let result = await response.json();
+            document.getElementById('port-scan-results').textContent = JSON.stringify(result, null, 2);
+        };
+
+        // Header scanner submission
+        document.getElementById('header-scan-form').onsubmit = async function (e) {
+            e.preventDefault();
+            let formData = new FormData(this);
+            let response = await fetch('/scan', {
+                method: 'POST',
+                body: formData,
+            });
+            let result = await response.json();
+            document.getElementById('header-scan-results').textContent = JSON.stringify(result, null, 2);
+        };
+    </script>
+</body>
+</html>
+

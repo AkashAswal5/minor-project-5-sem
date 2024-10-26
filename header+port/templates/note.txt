@@ -1,0 +1,62 @@
+
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scanner</title>
+</head>
+<body>
+    <h1>Welcome to the Scanner</h1>
+
+    <!-- Port Scanner Form -->
+    <h2>Port Scanner</h2>
+    <form id="port-scan-form">
+        <input type="text" name="target" placeholder="Target IP or Domain" required>
+        <input type="number" name="start_port" placeholder="Start Port" required>
+        <input type="number" name="end_port" placeholder="End Port" required>
+        <button type="submit">Scan Ports</button>
+    </form>
+    <div id="port-scan-results"></div>
+
+    <!-- Security Headers Scanner Form -->
+    <h2>Security Headers Scanner</h2>
+    <form id="header-scan-form">
+        <input type="text" name="url" placeholder="URL to scan" required>
+        <button type="submit">Scan Headers</button>
+    </form>
+    <div id="header-scan-results"></div>
+
+    <script>
+        // Port scanner submission
+        document.getElementById('port-scan-form').onsubmit = async function (e) {
+            e.preventDefault();
+            let formData = new FormData(this);
+            let response = await fetch('/port_scan', {
+                method: 'POST',
+                body: formData,
+            });
+            let result = await response.json();
+            document.getElementById('port-scan-results').textContent = JSON.stringify(result, null, 2);
+        };
+
+    </script>
+    <script>
+
+
+        // Header scanner submission
+        document.getElementById('header-scan-form').onsubmit = async function (e) {
+            e.preventDefault();
+            let formData = new FormData(this);
+            let response = await fetch('/scan', {
+                method: 'POST',
+                body: formData,
+            });
+            let result = await response.json();
+            document.getElementById('header-scan-results').textContent = JSON.stringify(result, null, 2);
+        };
+    </script>
+</body>
+</html>
+
+
