@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard_style.css') }}">
+
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            margin: 15% auto;
+            width: 30%;
+        }
+
+        .modal button {
+            margin: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Flash messages -->
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul class="flash-messages">
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <h2>Welcome, {{ user.username }}</h2>
+            <p><a href="{{ url_for('logout') }}" class="logout-btn">Logout</a></p>
+            <h3>Your Information</h3>
+            <p><strong>IP Address:</strong> {{ user.ip_address }}</p>
+            <p><strong>Last Access:</strong> {{ user.last_access_time }}</p>
+
+            <h3 style="color: red;">Learn More</h3>
+            <a href="{{ url_for('learning_dashboard') }}" style="color: red ; ">Access Learning Resources</a>
+        </aside>
+
+        <main class="main-content">
+           
+
+            <section class="scan-section">
+                <h2>Perform a Security Scan</h2>
+                <form id="scanForm" action="{{ url_for('perform_scan_route') }}" method="post" class="scan-form">
+                    <input type="text" name="url" placeholder="Enter website URL" required>
+                    <button type="button" class="scan-btn" onclick="showScanOptions()">Choose Scan Type</button>
+                </form>
+
+                <div class="services">
+                    <h3>Available Scans</h3>
+                    <div class="service-box" onclick="performScan('sql')">
+                        <i class="fas fa-database"></i>
+                        <h4>SQL Injection</h4>
+                        <p>Identify SQL injection vulnerabilities.</p>
+                    </div>
+                    <div class="service-box" onclick="performScan('xss')">
+                        <i class="fas fa-bug"></i>
+                        <h4>XSS Vulnerability</h4>
+                        <p>Detect Cross-Site Scripting risks.</p>
+                    </div>
+                    <div class="service-box" onclick="performScan('malware')">
+                        <i class="fas fa-shield-alt"></i>
+                        <h4>Malware Scan</h4>
+                        <p>Find and prevent malware threats.</p>
+                    </div>
+                    <div class="service-box" onclick="performScan('port')">
+                        <i class="fas fa-network-wired"></i>
+                        <h4>Open Ports</h4>
+                        <p>Check for open and vulnerable ports.</p>
+                    </div>
+                </div>
+            </section>
+            <form action="{{ url_for('perform_scan_route') }}" method="POST">
+                <input type="text" name="url" placeholder="Enter URL" required>
+                <select name="scan_type" required>
+                    <option value="sql_injection">SQL Injection</option>
+                    <option value="xss">XSS</option>
+                    <option value="port_scan">Port Scan</option>
+                </select>
+                <button type="submit">Perform Scan</button>
+            </form>
+            
+            <section class="scan-results">
+                <h2>Scan Results</h2>
+                {% if scan_results %}
+                <div id="scan-results" class="result-box">
+                    <h3>Results:</h3>
+                    <pre>{{ scan_results }}</pre>
+                </div>
+                {% else %}
+                <p>No scan results to display. Perform a scan to see results here.</p>
+                {% endif %}
+            </section>
+
+             <section class="search-history">
+                <h2>Your Recent Searches</h2>
+                <ul class="search-list">
+                    {% for search in searches %}
+                    <li>{{ search.search_term }} - {{ search.timestamp }}</li>
+                    {% endfor %}
+                </ul>
+            </section>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2024 Cybersecurity Dashboard. All rights reserved.</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+    <!-- Modal for Scan Options -->
+    <div id="scanModal" class="modal">
+        <div class="modal-content">
+            <h3>Select Scan Type</h3>
+            <button onclick="performScan('sql')">SQL Injection</button>
+            <button onclick="performScan('xss')">XSS Vulnerability</button>
+            <button onclick="performScan('malware')">Malware Scan</button>
+            <button onclick="performScan('port')">Open Ports</button>
+            <button onclick="closeModal()">Cancel</button>
+        </div>
+    </div>
+    <div class="services">
+        <div class="service-box">
+            <i class="fas fa-database"></i>
+            <a href="{{ url_for('sql_injection') }}">SQL Injection Detection</a>
+            <p>Identify SQL injection vulnerabilities.</p>
+        </div>
+        <div class="service-box">
+            <i class="fas fa-network-wired"></i>
+            <a href="{{ url_for('port_scan') }}">Port Scanner</a>
+            <p>Check for open and vulnerable ports.</p>
+        </div>
+        <div class="service-box">
+            <i class="fas fa-bug"></i>
+            <a href="{{ url_for('xss_scan') }}">XSS Vulnerability Detection</a>
+            <p>Detect Cross-Site Scripting risks.</p>
+        </div>
+    </div>
+    
+    </div>
+    
+
+    <script>
+        // Show the scan options modal
+        function showScanOptions() {
+            document.getElementById('scanModal').style.display = 'block';
+        }
+
+        // Close the scan options modal
+        function closeModal() {
+            document.getElementById('scanModal').style.display = 'none';
+        }
+
+        // Perform the selected scan and submit the form
+        function performScan(scanType) {
+            // Add a hidden input with the selected scan type
+            var form = document.getElementById('scanForm');
+            var input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'scan_type';
+            input.value = scanType;
+            form.appendChild(input);
+
+            // Submit the form
+            form.submit();
+        }
+    </script>
+</body>
+
+</html>

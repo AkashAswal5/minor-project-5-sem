@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Injection Scanner</title>
+</head>
+<body>
+    <h1>SQL Injection Scan</h1>
+    <form method="POST" action="/sql_injection">
+        <label for="target_url">Target URL:</label><br>
+        <input type="text" id="target_url" name="target_url" placeholder="Enter the URL to test" required><br><br>
+        
+        <label for="payloads">Custom Payloads (optional):</label><br>
+        <textarea id="payloads" name="payloads" rows="4" cols="50" placeholder="Enter payloads, one per line"></textarea><br><br>
+        
+        <button type="submit">Run SQL Injection Scan</button>
+    </form>
+    
+    {% if scan_results %}
+        <h2>Scan Results:</h2>
+        <pre>{{ scan_results }}</pre>
+    {% endif %}
+    
+    <a href="/dashboard">Back to Dashboard</a>
+</body>
+</html>

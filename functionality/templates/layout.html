@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>{% block title %}Flask App{% endblock %}</title>
+</head>
+<body>
+    <header>
+        <h1>Flask App</h1>
+        {% if session.username %}
+            <p>Welcome, {{ session.username }}! <a href="{{ url_for('logout') }}">Logout</a></p>
+        {% endif %}
+    </header>
+    <main>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class="flashes">
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </main>
+    <footer>
+        <p>&copy; 2024 Your App</p>
+    </footer>
+</body>
+</html>

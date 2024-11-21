@@ -1,0 +1,163 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Dashboard Container */
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f4f6f8;
+    color: #333;
+}
+
+/* Sidebar */
+.sidebar {
+    background-color: #2b2f3e;
+    color: #fff;
+    padding: 20px;
+    width: 250px;
+    text-align: center;
+}
+
+.sidebar h2 {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+.sidebar p {
+    margin: 10px 0;
+}
+
+.logout-btn {
+    color: #f05454;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.sidebar h3 {
+    margin-top: 20px;
+    font-size: 1.2em;
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    padding: 40px;
+}
+
+/* Search History */
+.search-history {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.search-history h2 {
+    font-size: 1.4em;
+    margin-bottom: 10px;
+}
+
+.search-list {
+    list-style-type: none;
+    color: #555;
+}
+
+/* Scan Section */
+.scan-section {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.scan-section h2 {
+    font-size: 1.4em;
+    margin-bottom: 10px;
+}
+
+.scan-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.scan-form input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.scan-btn {
+    padding: 10px 20px;
+    background-color: #4a90e2;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.scan-btn:hover {
+    background-color: #357ABD;
+}
+
+/* Services */
+.services {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.service-box {
+    flex: 1 1 200px;
+    background-color: #fafafa;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: 1px solid #ddd;
+}
+
+.service-box:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.service-box i {
+    font-size: 2em;
+    color: #4a90e2;
+    margin-bottom: 10px;
+}
+
+/* Scan Results */
+.scan-results {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+.result-box {
+    margin-top: 10px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 10px 0;
+    background-color: #2b2f3e;
+    color: #fff;
+    font-size: 0.9em;
+}

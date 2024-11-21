@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Scan Report</title>
+</head>
+<body>
+    <h1>Scan Report</h1>
+    <pre>{{ report }}</pre>
+    <a href="{{ url_for('static', filename='reports/' + report_path) }}" download>Download Report</a>
+</body>
+</html>
