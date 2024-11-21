@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced SQL Injection Vulnerability Scanner</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            width: 50%;
+            margin: 20px auto;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .scan-header input[type="text"] {
+            padding: 10px;
+            width: 70%;
+            font-size: 16px;
+        }
+        .scan-header button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .scan-header button:hover {
+            background-color: #45a049;
+        }
+        .scan-results {
+            margin-top: 20px;
+        }
+        .result {
+            background-color: #f9f9f9;
+            padding: 15px;
+            margin-top: 10px;
+            border-left: 5px solid #e74c3c;
+        }
+        .result.safe {
+            border-left: 5px solid #2ecc71;
+        }
+        .result p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+     SQL Injection Vulnerability Scanner
+</header>
+
+<div class="container">
+    <div class="scan-header">
+        <h2>Scan for SQL Injection Vulnerability</h2>
+        <input type="text" id="url" placeholder="Enter URL to test">
+        <button onclick="startScan()">Scan</button>
+    </div>
+
+    <div class="scan-results" id="scan-results"></div>
+</div>
+
+<script>
+    async function startScan() {
+        const url = document.getElementById('url').value.trim();
+        if (url) {
+            try {
+                const response = await fetch('/scan_sql', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ url })
+                });
+
+                const result = await response.json();
+                displayResult(result);
+            } catch (error) {
+                alert("An error occurred while scanning the URL.");
+                console.error(error);
+            }
+        } else {
+            alert("Please enter a valid URL.");
+        }
+    }
+
+    function displayResult(result) {
+        const resultDiv = document.getElementById('scan-results');
+        resultDiv.innerHTML = '';
+
+        if (result.error) {
+            resultDiv.innerHTML = `<div class="result"><p>Error: ${result.error}</p></div>`;
+            return;
+        }
+
+        if (result.vulnerable) {
+            resultDiv.innerHTML = `
+                <div class="result">
+                    <p><strong>Potential SQL Injection Vulnerabilities Detected:</strong></p>
+                    <ul>
+                        ${result.vulnerabilities.map(v => `<li>${v}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+        } else {
+            resultDiv.innerHTML = `
+                <div class="result safe">
+                    <p><strong>No SQL Injection Vulnerabilities Detected:</strong></p>
+                </div>
+            `;
+        }
+    }
+</script>
+
+</body>
+</html>

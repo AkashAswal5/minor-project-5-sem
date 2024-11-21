@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Powerful XSS Detection Tool</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f7f7f7;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        input[type="text"], button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        .results {
+            margin-top: 20px;
+        }
+        .vulnerable {
+            color: red;
+        }
+        .safe {
+            color: green;
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Powerful XSS Detection Tool</h2>
+        <input type="text" id="url" placeholder="Enter target URL" />
+        <button onclick="startScan()">Scan for XSS</button>
+        <div id="results" class="results"></div>
+    </div>
+
+    <script>
+        async function startScan() {
+            const url = document.getElementById('url').value;
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = "Scanning...";
+
+            if (url) {
+                const response = await fetch('/scan_xss', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ url: url })
+                });
+                const result = await response.json();
+
+                if (result.results) {
+                    resultsDiv.innerHTML = `
+                        <h3>Scan Results:</h3>
+                        <ul>
+                            ${result.results.map(r => `
+                                <li>
+                                    <strong>Field:</strong> ${r.field}<br>
+                                    <strong>Payload:</strong> ${r.payload}<br>
+                                    <strong>Vulnerable:</strong> ${r.vulnerable ? '<span class="vulnerable">Yes</span>' : '<span class="safe">No</span>'}<br>
+                                    <strong>Response:</strong>
+                                    <pre>${r.response ? r.response.replace(/</g, "&lt;").replace(/>/g, "&gt;") : 'No Response'}</pre>
+                                </li>
+                            `).join('')}
+                        </ul>
+                    `;
+                } else {
+                    resultsDiv.innerHTML = `<h3 class="safe">No vulnerabilities detected.</h3>`;
+                }
+            } else {
+                alert("Please enter a valid URL.");
+            }
+        }
+    </script>
+</body>
+</html>

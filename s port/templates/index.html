@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Port Scanner</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+        }
+        .open {
+            color: green;
+        }
+        .closed {
+            color: red;
+        }
+        .error {
+            color: orange;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Port Scanner</h1>
+        <p>Enter the IP address you want to scan:</p>
+        <input type="text" id="target-ip" placeholder="Enter target IP address">
+        <button id="scan-btn">Start Scan</button>
+
+        <div id="results" class="result"></div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $("#scan-btn").click(function() {
+                var target_ip = $("#target-ip").val();
+
+                if (target_ip) {
+                    $("#results").html("<p>Scanning...</p>");
+                    $.ajax({
+                        url: '/scan_ports',
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: JSON.stringify({ "ip": target_ip }),
+                        success: function(response) {
+                            var results = response.scan_results;
+                            var resultHTML = "<h2>Scan Results for " + target_ip + ":</h2>";
+                            resultHTML += "<ul>";
+
+                            if (results.length > 0) {
+                                results.forEach(function(result) {
+                                    var statusClass = result.status === "open" ? "open" : (result.status === "closed" ? "closed" : "error");
+                                    resultHTML += "<li>Port " + result.port + ": <span class='" + statusClass + "'>" + result.status + "</span></li>";
+                                });
+                            } else {
+                                resultHTML += "<li>No ports found or an error occurred.</li>";
+                            }
+
+                            resultHTML += "</ul>";
+                            $("#results").html(resultHTML);
+                        },
+                        error: function(error) {
+                            $("#results").html("<p>An error occurred. Please try again later.</p>");
+                        }
+                    });
+                } else {
+                    alert("Please enter an IP address.");
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

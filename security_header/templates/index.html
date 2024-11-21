@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Header Scanner</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        .warning {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Security Header Scanner</h1>
+    <form id="scanForm">
+        <label for="url">Enter URL:</label>
+        <input type="text" id="url" name="url" placeholder="https://example.com" required>
+        <button type="submit">Scan Headers</button>
+    </form>
+
+    <div id="results" style="display:none;">
+        <h2>Security Report Summary</h2>
+        <p><strong>Site:</strong> <span id="site"></span></p>
+        <p><strong>IP Address:</strong> <span id="ip_address"></span></p>
+        <p><strong>Report Time:</strong> <span id="report_time"></span></p>
+        <h3>Headers Found:</h3>
+        <table id="headerTable">
+            <thead>
+                <tr>
+                    <th>Header</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+        <h3>Missing Headers:</h3>
+        <ul id="missingHeaders"></ul>
+
+        <h3>Warnings:</h3>
+        <ul id="warnings"></ul>
+
+        <h3>Raw Headers:</h3>
+        <pre id="rawHeaders"></pre>
+
+        <h3>Upcoming Headers:</h3>
+        <ul id="upcomingHeaders"></ul>
+
+        <h3>Additional Information:</h3>
+        <p><strong>Server:</strong> <span id="server"></span></p>
+        <p><strong>Access-Control-Allow-Origin:</strong> <span id="cors"></span></p>
+        <p><strong>Cookies:</strong> <span id="cookies"></span></p>
+    </div>
+
+    <script>
+        document.getElementById('scanForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const url = document.getElementById('url').value;
+            const formData = new FormData();
+            formData.append('url', url);
+
+            fetch('/scan', {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert('Error: ' + data.error);
+                    return;
+                }
+
+                document.getElementById('results').style.display = 'block';
+                document.getElementById('site').innerText = data.site_info.site;
+                document.getElementById('ip_address').innerText = data.site_info.ip_address;
+                document.getElementById('report_time').innerText = data.site_info.report_time;
+
+                const tableBody = document.getElementById('tableBody');
+                tableBody.innerHTML = ''; // Clear previous results
+                Object.keys(data.headers_found).forEach(header => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${header}</td>
+                        <td>${data.headers_found[header]}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+
+                const missingHeaders = document.getElementById('missingHeaders');
+                missingHeaders.innerHTML = '';
+                data.missing_headers.forEach(header => {
+                    const li = document.createElement('li');
+                    li.innerText = header;
+                    missingHeaders.appendChild(li);
+                });
+
+                const warnings = document.getElementById('warnings');
+                warnings.innerHTML = '';
+                data.warnings.forEach(warning => {
+                    const li = document.createElement('li');
+                    li.classList.add('warning');
+                    li.innerText = warning;
+                    warnings.appendChild(li);
+                });
+
+                document.getElementById('rawHeaders').innerText = JSON.stringify(data.raw_headers, null, 2);
+
+                const upcomingHeaders = document.getElementById('upcomingHeaders');
+                upcomingHeaders.innerHTML = '';
+                data.upcoming_headers.forEach(header => {
+                    const li = document.createElement('li');
+                    li.innerText = header;
+                    upcomingHeaders.appendChild(li);
+                });
+
+                document.getElementById('server').innerText = data.additional_info.server;
+                document.getElementById('cors').innerText = data.additional_info.access_control_allow_origin;
+                document.getElementById('cookies').innerText = data.additional_info.cookies;
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+
+</body>
+</html>
