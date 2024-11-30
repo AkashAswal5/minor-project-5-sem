@@ -10,6 +10,8 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
+
+
 # Route for port scanner
 @app.route('/port_scan', methods=['POST'])
 def port_scan():
