@@ -1,0 +1,96 @@
+my_flask_project/
+├── .env
+├── .gitignore
+├── README.md
+├── requirements.txt
+├── run.py
+├── config.py
+├── app/
+│   ├── __init__.py
+│   ├── main/
+│   │   ├── __init__.py
+│   │   ├── routes.py
+│   │   └── templates/
+│   │       └── index.html
+│   ├── auth/
+│   │   ├── __init__.py
+│   │   ├── routes.py
+│   │   ├── forms.py
+│   │   └── templates/
+│   │       ├── login.html
+│   │       └── register.html
+│   ├── dashboard/
+│   │   ├── __init__.py
+│   │   ├── routes.py
+│   │   └── templates/
+│   │       └── dashboard.html
+│   ├── api/
+│   │   ├── __init__.py
+│   │   ├── routes.py
+│   ├── models/
+│   │   ├── __init__.py
+│   │   └── user.py
+│   ├── static/
+│   ├── templates/
+│   │   └── base.html
+└── tests/
+
+
+my_flask_project/
+├── .env                        # Environment variables (kept private)
+├── .gitignore                  # Git ignore rules
+├── README.md                   # Project documentation
+├── requirements.txt            # Python dependencies
+├── run.py                      # Entry point to run the Flask app
+├── config.py                   # Configuration for different environments
+├── instance/                   # Instance folder for sensitive files
+│   └── config.py               # Instance-specific configurations
+│
+├── app/                        # Main application package
+│   ├── __init__.py             # Initializes the Flask app
+│   ├── main/                   # Main website 1(landing page and static content)
+│   │   ├── __init__.py
+│   │   ├── routes.py           # Routes for the main website
+│   │   └── templates/          # HTML templates for the main website
+│   │       └── index.html
+│   │       └── layout.html
+│   ├── auth/                   # Authentication package (login, registration)
+│   │   ├── __init__.py
+│   │   ├── routes.py           # Auth routes
+│   │   ├── forms.py            # WTForms for login, signup
+│   │   └── templates/          # HTML templates for auth pages
+│   │       ├── login.html
+│   │       └── register.html
+│   ├── dashboard/              # Dashboard package
+│   │   ├── __init__.py
+│   │   ├── routes.py           # Dashboard routes
+│   │   ├── templates/          # HTML templates for the dashboard
+│   │       └── dashboard.html
+│   ├── api/                    # API package
+│   │   ├── __init__.py
+│   │   ├── routes.py           # API routes
+│   │   └── utils.py            # Utility functions for API
+│   ├── models/                 # Database models
+│   │   ├── __init__.py
+│   │   ├── user.py             # User model
+│   │   └── post.py             # Other models
+│   ├── static/                 # Static files (CSS, JS, images)
+│   │   ├── css/
+│   │   ├── js/
+│   │   └── images/
+│   ├── templates/              # Shared templates for the application
+│   │   └── base.html           # Base layout template
+│   ├── forms.py                # WTForms for various forms
+│   ├── extensions.py           # Third-party extensions (e.g., Flask-Login, Flask-Migrate)
+│   └── utils.py                # General utility functions
+│
+├── migrations/                 # Database migrations (if using Flask-Migrate)
+│   └── versions/               # Migration scripts
+│
+├── tests/                      # Tests for the application
+│   ├── test_auth.py            # Auth tests
+│   ├── test_dashboard.py       # Dashboard tests
+│   └── test_api.py             # API tests
+│
+├── Dockerfile                  # Dockerfile for containerizing the app
+└── docker-compose.yml          # Docker Compose configuration for multi-container setup
